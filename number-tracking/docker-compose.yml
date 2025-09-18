@@ -1,0 +1,17 @@
+version: "2"
+services:
+  redis:
+    image: redis:7
+    container_name: local-redis
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    container_name: tracking-generator
+    ports:
+      - "8085:8085"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
